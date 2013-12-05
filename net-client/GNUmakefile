@@ -131,7 +131,7 @@ $(APP): $(ALL_OBJS) $(OBJ_TESTS_TS)
 
 %.t: %.to %.o
 	@echo -e '\n'===== $@, building test...
-	gcc -o $*.t $^ $($(@:.t=_TEST_LIBS))
+	gcc -o $*.t $(patsubst %.o,,$^) $($(@:.t=_TEST_LIBS))
 
 %.t: %.to
 	@echo -e '\n'===== $@, building test...
