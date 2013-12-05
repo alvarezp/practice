@@ -62,4 +62,37 @@ int net_client_set_port(net_client_t * this, unsigned int port) {
 	return EXIT_SUCCESS;
 }
 
+int net_client_connect(net_client_t * this) {
+	if (this == NULL) {
+		return EXIT_FAILURE;
+	}
+
+	if (this->port > 65535) {
+		return EXIT_FAILURE;
+	}
+
+	if (this->target == NULL) {
+		return EXIT_FAILURE;
+	}
+
+	this->socket = socket(AF_INET, SOCK_STREAM, 0);
+	if (this->socket == -1) {
+		this->socket = 0;
+		return -1;
+	}
+
+	struct sockaddr_in addr;
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = this->port;
+	addr.sin_addr.s_addr = this->in_addr;
+
+	if (connect(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
+		this->socket = 0;
+		return -1;
+	}
+
+	return EXIT_SUCCESS;
+}
 
