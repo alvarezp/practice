@@ -86,7 +86,7 @@ int net_client_connect(net_client_t * this) {
 
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = this->port;
+	addr.sin_port = htons(this->port);
 	addr.sin_addr.s_addr = this->in_addr;
 
 	if (connect(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
