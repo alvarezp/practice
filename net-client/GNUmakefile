@@ -18,7 +18,7 @@ APP = net-client
 APP_TESTS = 
 LIBS =
 
-OBJS_TDD = 
+OBJS_TDD = net-client.o
 OBJS_NO_TDD = main.o
 
 #apptest1.t: apptest2.to
