@@ -11,7 +11,7 @@ int main(void) {
 	client = net_client_new();
 	assert(client != NULL);
 
-	assert(net_client_set_target(client, "localhost") == EXIT_SUCCESS);
+	assert(net_client_set_target(client, "127.0.0.1") == EXIT_SUCCESS);
 
 	assert(net_client_set_port(client, 4000) == EXIT_SUCCESS);
 

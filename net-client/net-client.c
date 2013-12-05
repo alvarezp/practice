@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <netinet/in.h>
+
 #include "net-client.h"
 
 net_client_t * net_client_new(void) {
@@ -27,6 +29,15 @@ int net_client_set_target(net_client_t * this, const char * target) {
 	if (this == NULL) {
 		return EXIT_FAILURE;;
 	}
+
+	in_addr_t in_addr;
+	in_addr = inet_addr(target);
+
+	if (in_addr == (in_addr_t)(-1)) {
+		return EXIT_FAILURE;
+	}
+
+	this->in_addr = in_addr;
 
 	char *targetdup = strdup(target);
 	if (targetdup == NULL) {

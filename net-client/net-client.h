@@ -1,8 +1,11 @@
 #ifndef __NET_CLIENT_H
 #define __NET_CLIENT_H
 
+#include <arpa/inet.h>
+
 typedef struct net_client {
 	char * target;
+	in_addr_t in_addr;
 	int port;
 } net_client_t;
 
