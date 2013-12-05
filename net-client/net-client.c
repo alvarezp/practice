@@ -45,6 +45,7 @@ int net_client_set_target(net_client_t * this, const char * target) {
 	}
 
 	this->target = targetdup;
+
 	return EXIT_SUCCESS;
 }
 
@@ -91,6 +92,19 @@ int net_client_connect(net_client_t * this) {
 	if (connect(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
 		this->socket = 0;
 		return -1;
+	}
+
+	return EXIT_SUCCESS;
+}
+
+int net_client_disconnect(net_client_t * this) {
+
+	if (this == NULL) {
+		return EXIT_FAILURE;
+	}
+
+	if (shutdown(this->socket, SHUT_RDWR) != 0) {
+		return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;

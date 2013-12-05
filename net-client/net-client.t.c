@@ -13,6 +13,15 @@ int connect(int socket, const struct sockaddr *address,
 	return EXIT_SUCCESS;
 }
 
+int shutdown(int socket, int how)
+{
+	assert(socket != 0);
+	assert(how != 0);
+
+	return EXIT_SUCCESS;
+}
+
+
 int main(void) {
 
 	net_client_t * client = NULL;
@@ -26,6 +35,8 @@ int main(void) {
 	assert(net_client_set_port(client, 4000) == EXIT_SUCCESS);
 
 	assert(net_client_connect(client) == EXIT_SUCCESS);
+
+	assert(net_client_disconnect(client) == EXIT_SUCCESS);
 
 	net_client_delete(client);
 

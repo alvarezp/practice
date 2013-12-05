@@ -15,5 +15,6 @@ void net_client_delete(net_client_t * this);
 int net_client_set_target(net_client_t * this, const char * target);
 int net_client_set_port(net_client_t * this, unsigned int port);
 int net_client_connect(net_client_t * this);
+int net_client_disconnect(net_client_t * this);
 
 #endif
