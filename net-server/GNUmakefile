@@ -18,7 +18,7 @@ APP = net-server
 APP_TESTS = 
 LIBS =
 
-OBJS_TDD = 
+OBJS_TDD = net-server.o
 OBJS_NO_TDD = main.o
 
 #apptest1.t: apptest2.to
@@ -99,17 +99,27 @@ $(APP): $(ALL_OBJS) $(OBJ_TESTS_TS)
 	@mkdir -p .caddeus/dependencies/$(*D)
 	gcc $(CFLAGS) -MM -MP -MT $*.o $*.c > .caddeus/dependencies/$*.d
 
+.PHONY : testgoodts/%
+testgoodts/%:
+	echo "Test $$(basename "$(*F)" .ts).t completed successfully."
+	mkdir -p $(*D)
+	touch $*
+
+.PHONY : testgoodtts/%
+testgoodtts/%:
+	echo "Test $$(basename "$(*F)" .tts).tt completed successfully."
+	mkdir -p $(*D)
+	touch $*
+
 .caddeus/timestamps/%.ts: %.t
 	$(eval CALL_TIMEOUT=$(call multiply,$(firstword $($(@:.ts=_TIMEOUT_MULT)) 1),$(DEFAULT_TIMEOUT)))
 	@echo -e '\n'===== $@, running test with timeout=$(CALL_TIMEOUT)...
-	@mkdir -p $(@D)
-	timeout $(CALL_TIMEOUT) $(VALGRIND) ./$*.t && touch $@
+	timeout $(CALL_TIMEOUT) $(VALGRIND) ./$*.t && $(MAKE) -s testgoodts/$@
 
 .caddeus/timestamps/%.tts: %.tt $(APP)
 	$(eval CALL_TIMEOUT=$(call multiply,$(firstword $($(@:.tts=_TIMEOUT_MULT)) 1),$(DEFAULT_TIMEOUT)))
 	@echo -e '\n'===== $@, running test with timeout=$(CALL_TIMEOUT)...
-	@mkdir -p $(@D)
-	timeout $(CALL_TIMEOUT) $(VALGRIND) ./$*.tt && touch $@
+	timeout $(CALL_TIMEOUT) $(VALGRIND) ./$*.tt && $(MAKE) -s testgoodtts/$@
 
 %.t.c:
 	@echo -e '\n'===== $@ doesn\'t exist\! Please create one.
@@ -131,7 +141,7 @@ $(APP): $(ALL_OBJS) $(OBJ_TESTS_TS)
 
 %.t: %.to %.o
 	@echo -e '\n'===== $@, building test...
-	gcc -o $*.t $^ $($(@:.t=_TEST_LIBS))
+	gcc -o $*.t $(patsubst %.o,,$^) $($(@:.t=_TEST_LIBS))
 
 %.t: %.to
 	@echo -e '\n'===== $@, building test...
