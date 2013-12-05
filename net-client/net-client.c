@@ -36,3 +36,19 @@ int net_client_set_target(net_client_t * this, const char * target) {
 	this->target = targetdup;
 	return EXIT_SUCCESS;
 }
+
+int net_client_set_port(net_client_t * this, unsigned int port) {
+	if (this == NULL) {
+		return EXIT_FAILURE;
+	}
+
+	if (port > 65535) {
+		return EXIT_FAILURE;
+	}
+
+	this->port = port;
+
+	return EXIT_SUCCESS;
+}
+
+

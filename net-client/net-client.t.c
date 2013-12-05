@@ -13,6 +13,8 @@ int main(void) {
 
 	assert(net_client_set_target(client, "localhost") == EXIT_SUCCESS);
 
+	assert(net_client_set_port(client, 4000) == EXIT_SUCCESS);
+
 	net_client_delete(client);
 
 	return EXIT_SUCCESS;
