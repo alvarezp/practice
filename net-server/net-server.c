@@ -13,6 +13,7 @@ net_server_t * net_server_new(void) {
 	if (this == NULL) {
 		return NULL;
 	}
+	this->in_addr = inet_addr("127.0.0.1");
 	return this;
 }
 
@@ -37,7 +38,6 @@ int net_server_set_port(net_server_t * this, unsigned int port) {
 	return EXIT_SUCCESS;
 }
 
-/* Still has the code from net_client_connect */
 int net_server_start(net_server_t * this) {
 	if (this == NULL) {
 		return EXIT_FAILURE;
@@ -60,7 +60,7 @@ int net_server_start(net_server_t * this) {
 	addr.sin_port = htons(this->port);
 	addr.sin_addr.s_addr = this->in_addr;
 
-	if (connect(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
+	if (bind(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
 		this->socket = 0;
 		return -1;
 	}
