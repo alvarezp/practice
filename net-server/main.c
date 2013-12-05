@@ -23,15 +23,12 @@ int main(void) {
 		return EXIT_FAILURE;
 	}
 
-	if(net_server_connect(server) != EXIT_SUCCESS) {
+/*
+	if(net_server_start(server) != EXIT_SUCCESS) {
 		perror("net-server");
 		return EXIT_FAILURE;
 	}
-
-	if(net_server_disconnect(server) != EXIT_SUCCESS) {
-		perror("net-server");
-		return EXIT_FAILURE;
-	}
+*/
 
 	net_server_delete(server);
 

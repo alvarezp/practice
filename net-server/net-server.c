@@ -63,7 +63,8 @@ int net_server_set_port(net_server_t * this, unsigned int port) {
 	return EXIT_SUCCESS;
 }
 
-int net_server_connect(net_server_t * this) {
+/* Still has the code from net_client_connect */
+int net_server_start(net_server_t * this) {
 	if (this == NULL) {
 		return EXIT_FAILURE;
 	}
@@ -92,19 +93,6 @@ int net_server_connect(net_server_t * this) {
 	if (connect(this->socket, (struct sockaddr *) &addr , sizeof(addr)) == -1) {
 		this->socket = 0;
 		return -1;
-	}
-
-	return EXIT_SUCCESS;
-}
-
-int net_server_disconnect(net_server_t * this) {
-
-	if (this == NULL) {
-		return EXIT_FAILURE;
-	}
-
-	if (shutdown(this->socket, SHUT_RDWR) != 0) {
-		return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;

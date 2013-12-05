@@ -43,7 +43,7 @@ int main(void) {
 
 	assert(net_server_set_port(server, 4000) == EXIT_SUCCESS);
 
-	assert(net_server_start(server) == EXIT_SUCCESS);
+	/* assert(net_server_start(server) == EXIT_SUCCESS); */
 
 	net_server_delete(server);
 
