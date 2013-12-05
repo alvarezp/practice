@@ -4,7 +4,6 @@
 #include <arpa/inet.h>
 
 typedef struct net_server {
-	char * target;
 	in_addr_t in_addr;
 	int port;
 	int socket;

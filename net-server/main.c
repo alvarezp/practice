@@ -13,11 +13,6 @@ int main(void) {
 		return EXIT_FAILURE;
 	}
 
-	if(net_server_set_target(server, "127.0.0.1") != EXIT_SUCCESS) {
-		perror("net-server");
-		return EXIT_FAILURE;
-	}
-
 	if(net_server_set_port(server, 4000) != EXIT_SUCCESS) {
 		perror("net-server");
 		return EXIT_FAILURE;

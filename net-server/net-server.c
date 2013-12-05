@@ -13,7 +13,6 @@ net_server_t * net_server_new(void) {
 	if (this == NULL) {
 		return NULL;
 	}
-	this->target = NULL;
 	return this;
 }
 
@@ -21,32 +20,7 @@ void net_server_delete(net_server_t * this) {
 	if (this == NULL) {
 		return;
 	}
-	free(this->target);
 	free(this);
-}
-
-int net_server_set_target(net_server_t * this, const char * target) {
-	if (this == NULL) {
-		return EXIT_FAILURE;;
-	}
-
-	in_addr_t in_addr;
-	in_addr = inet_addr(target);
-
-	if (in_addr == (in_addr_t)(-1)) {
-		return EXIT_FAILURE;
-	}
-
-	this->in_addr = in_addr;
-
-	char *targetdup = strdup(target);
-	if (targetdup == NULL) {
-		return EXIT_FAILURE;
-	}
-
-	this->target = targetdup;
-
-	return EXIT_SUCCESS;
 }
 
 int net_server_set_port(net_server_t * this, unsigned int port) {
@@ -70,10 +44,6 @@ int net_server_start(net_server_t * this) {
 	}
 
 	if (this->port > 65535) {
-		return EXIT_FAILURE;
-	}
-
-	if (this->target == NULL) {
 		return EXIT_FAILURE;
 	}
 
