@@ -15,7 +15,7 @@ VALGRIND_EXTRA = --suppressions=/dev/null
 .SECONDARY:
 
 APP = net-client
-APP_TESTS = 
+APP_TESTS = main.tt
 LIBS =
 
 OBJS_TDD = net-client.o

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+[ -x "$(which nc)" ] || {
+	echo "Fail: netcat is required to pass this test."
+	exit 1;
+}
+
+nc -l -p 4000 & NC_PID=$!
+
+./net-client
+
+pgrep $NC_PID && {
+	echo "Fail: netcat should have exited after net-client was launched"
+	exit 1;
+}
+
+exit 0;
