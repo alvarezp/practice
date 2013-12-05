@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 int connect(int socket, const struct sockaddr *address,
 	socklen_t address_len)
@@ -24,6 +25,7 @@ int shutdown(int socket, int how)
 
 int main(void) {
 
+	printf("Test #1: for a successful connect/disconnect...\n");
 	net_client_t * client = NULL;
 	assert(client == NULL);
 
@@ -37,6 +39,18 @@ int main(void) {
 	assert(net_client_connect(client) == EXIT_SUCCESS);
 
 	assert(net_client_disconnect(client) == EXIT_SUCCESS);
+
+	net_client_delete(client);
+
+	printf("Test #2: Test for an improper target name...\n");
+	client = net_client_new();
+	assert(client != NULL);
+
+	assert(net_client_set_target(client, "localhost") == EXIT_FAILURE);
+
+	assert(net_client_set_port(client, 4000) == EXIT_SUCCESS);
+
+	assert(net_client_connect(client) == EXIT_FAILURE);
 
 	net_client_delete(client);
 
